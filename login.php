@@ -54,7 +54,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     // Bind result variables
                     mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
                     if(mysqli_stmt_fetch($stmt)){
-                        if(password_verify($password, $hashed_password)){
+                     
+                        // Salt and pepper the password
+                        $salted = password_hash($param_username, PASSWORD_DEFAULT);
+                        $peppered = $all_pepper;
+                        $password_temp = $salted . $password . $peppered;
+                        $passwordsp = password_hash($password_temp, PASSWORD_DEFAULT);
+                        $password_ = password_hash($passwordsp, PASSWORD_DEFAULT);
+                     
+                        if(password_verify($password_, $hashed_password)){
                             // Password is correct, so start a new session
                             session_start();
                             
