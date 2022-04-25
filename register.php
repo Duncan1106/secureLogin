@@ -73,7 +73,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
             // Set parameters
             $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+            
+            // Salt and pepper the password
+            $salted = password_hash($username, PASSWORD_DEFAULT);
+            $peppered = $all_pepper;
+            $password_temp = $salted . $password . $peppered;
+            $passwordsp = password_hash($password_temp, PASSWORD_DEFAULT);
+         
+            $param_password = password_hash($passwordsp, PASSWORD_DEFAULT); // Creates a password hash
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
