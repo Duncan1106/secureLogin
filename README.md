@@ -1,2 +1,3 @@
 # secureLogin
-Trying to create a secure login page with php sql and html and a bit css to make it look good
+
+Trying to create a safe login with php, sql and a bit css to make it pretty
