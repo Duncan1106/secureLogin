@@ -79,8 +79,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $peppered = $all_pepper;
             $password_temp = $salted . $password . $peppered;
             $passwordsp = password_hash($password_temp, PASSWORD_DEFAULT);
-         
-            $param_password = password_hash($passwordsp, PASSWORD_DEFAULT); // Creates a password hash
+            
+            // Creates a password hash
+            $param_password = password_hash($passwordsp, PASSWORD_DEFAULT); 
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)) {
