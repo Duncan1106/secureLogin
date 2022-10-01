@@ -14,5 +14,7 @@ trying to create a safe login with php sql and a bit css to make it pretty
 ## Badges
 
 ![GitHub language count](https://img.shields.io/github/languages/count/Duncan1106/secureLogin?style=plastic)
-![GitHub Repo stars](https://img.shields.io/github/stars/Duncan1106/secureLogin?style=plastic)
-![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/Duncan1106/secureLogin?style=plastic)
+
+## Security
+
+[![Codacy Security Scan](https://github.com/Duncan1106/secureLogin/actions/workflows/codacy.yml/badge.svg)](https://github.com/Duncan1106/secureLogin/actions/workflows/codacy.yml)
