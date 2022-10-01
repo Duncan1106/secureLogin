@@ -1,7 +1,12 @@
 
+
+
 # secureLogin
 
 trying to create a safe login with php sql and a bit css to make it pretty
+
+## Warning
+ currently not working, still figering out why
 
 
 ## Features
