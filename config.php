@@ -14,7 +14,7 @@ $all_pepper = "a8G3eQLHpFeSeIhmDbhzhTRUEB1U6DZCs1M9SnZMl6WDVQfcY1E3z26oXX3tkHfUa
 6DZCs1M9SnZMl6WDVQfcY1E3z26oXX3tkHfUa8G3eQLHpFeSeIhmDbhzhTRUEB1U6DZCs1M9SnZMl6WDVQfcY1E3z26oXX3tkHfU";
 
 // Check connection
-if($link === false) {
+if ($link === false) {
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
 ?>
