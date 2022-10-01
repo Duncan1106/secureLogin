@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate new password
     if (empty(trim($_POST["new_password"]))) {
         $new_password_err = "Please enter the new password.";     
-    } elseif (strlen(trim($_POST["new_password"])) < 6) {
-        $new_password_err = "Password must have atleast 6 characters.";
+    } elseif (strlen(trim($_POST["new_password"])) < 8) {
+        $new_password_err = "Password must have atleast 8 characters.";
     } else {
         $new_password = trim($_POST["new_password"]);
     }
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_id = $_SESSION["id"];
             
             // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)) {
+            if (mysqli_stmt_execute($stmt)) {
                 // Password updated successfully. Destroy the session, and redirect to login page
                 session_destroy();
                 header("location: login.php");
