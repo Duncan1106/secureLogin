@@ -5,14 +5,10 @@
 
 trying to create a safe login with php sql and a bit css to make it pretty
 
-## Warning
- currently not working, still figering out why
-
-
 ## Features
 
 - password hashing with salt and pepper
-- single call to database
+- single calls to database
 - login, register and password reset
 - and many more features that i forgot
 
