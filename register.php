@@ -1,39 +1,39 @@
 <?php
 // Include config file
 require_once "config.php";
- 
+
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
- 
+
 // Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
- 
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
     // Validate username
-    if (empty(trim($_POST["username"]))) {
+    if(empty(trim($_POST["username"]))){
         $username_err = "Please enter a username.";
-    } else {
+    } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE username = ?";
-        
-        if ($stmt = mysqli_prepare($link, $sql)) {
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
+
+        if($stmt = mysqli_prepare($link, $sql)){
             // Set parameters
             $param_username = trim($_POST["username"]);
-            
+
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+
             // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
+            if(mysqli_stmt_execute($stmt)){
                 /* store result */
                 mysqli_stmt_store_result($stmt);
-                
-                if (mysqli_stmt_num_rows($stmt) > 0) {
+
+                if(mysqli_stmt_num_rows($stmt) > 0){
                     $username_err = "This username is already taken.";
-                } else {
+                } else{
                     $username = trim($_POST["username"]);
                 }
-            } else {
+            } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
 
@@ -41,53 +41,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_stmt_close($stmt);
         }
     }
-    
+
     // Validate password
-    if (empty(trim($_POST["password"]))) {
-        $password_err = "Please enter a password.";     
-    } elseif (strlen(trim($_POST["password"])) < 8) {
-        $password_err = "Password must have atleast 8 characters.";
-    } else {
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter a password.";
+    } elseif(strlen(trim($_POST["password"])) < 8){
+        $password_err = "Password must have at least 8 characters.";
+    } else{
         $password = trim($_POST["password"]);
     }
-    
+
     // Validate confirm password
-    if (empty(trim($_POST["confirm_password"]))) {
-        $confirm_password_err = "Please confirm password.";     
-    } else {
+    if(empty(trim($_POST["confirm_password"]))){
+        $confirm_password_err = "Please confirm password.";
+    } else{
         $confirm_password = trim($_POST["confirm_password"]);
-        if (empty($password_err) && ($password != $confirm_password)) {
+        if(empty($password_err) && ($password != $confirm_password)){
             $confirm_password_err = "Password did not match.";
         }
     }
-    
+
     // Check input errors before inserting in database
-    if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
-        
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-         
-        if ($stmt = mysqli_prepare($link, $sql)) {
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
-            
+
+        if($stmt = mysqli_prepare($link, $sql)){
             // Set parameters
             $param_username = $username;
-            
-            // Salt and pepper the password
-            $salted = password_hash($username, PASSWORD_DEFAULT);
-            $peppered = $all_pepper;
-            $password_temp = $salted . $password . $peppered;
-            $passwordsp = password_hash($password_temp, PASSWORD_DEFAULT);
-            
-            // Creates a password hash
-            $param_password = password_hash($passwordsp, PASSWORD_DEFAULT); 
-            
+
+            $pass = $param_username . $password . $all_pepper;
+            $param_password = password_hash($pass, PASSWORD_DEFAULT);
+
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
             // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
+            if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
                 header("location: login.php");
-            } else {
+            } else{
                 echo "Something went wrong. Please try again later.";
             }
 
@@ -95,12 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_stmt_close($stmt);
         }
     }
-    
+
     // Close connection
     mysqli_close($link);
 }
 ?>
- 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label>Username</label>
                 <input type="text" name="username" class="form-control" value="<?php echo htmlspecialchars($username); ?>">
                 <span class="help-block"><?php echo $username_err; ?></span>
-            </div>    
+            </div>
             <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                 <label>Password</label>
                 <input type="password" name="password" class="form-control" value="<?php echo htmlspecialchars($password); ?>">
@@ -138,6 +131,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
         </form>
-    </div>    
+    </div>
 </body>
 </html>
