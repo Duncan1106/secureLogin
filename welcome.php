@@ -36,7 +36,7 @@ require_once "config.php";
                       $sql = "SELECT id, firstname, lastname, username, email, date FROM users WHERE username = '".$_SESSION['username']."'";
                       $result = mysqli_query($link, $sql);
                       if (mysqli_num_rows($result) > 0) {
-                      // output data of each row
+                          // output data of each row
                           while($row = mysqli_fetch_assoc($result)) {
                              echo "<th colspan='2'>" . $_SESSION['username'] . "`s Dashboard" . "</th>".
                                   "<tr><td>" . "User ID: " . "</td>" . "<td>" . $row["id"]. "</td></tr>" .
