@@ -67,9 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             // Redirect user to welcome page
                             header("location: welcome.php");
                         } else {
-                            echo "<br>pwd:  " . $pass;
-                            echo "<br>hpwd: " . password_hash($pass, PASSWORD_DEFAULT);
-                            echo "<br>pwdh: " . $hashed_password;
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
                         }
