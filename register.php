@@ -3,11 +3,34 @@
 require_once "config.php";
 
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = "";
-$username_err = $password_err = $confirm_password_err = "";
+$firstname = $lastname = $email = $username = $password = $confirm_password = "";
+$firstname_err = $lastname_err = $email_err = $username_err = $password_err = $confirm_password_err = "";
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //Validate Firstname
+
+    if (empty(trim($_POST['firstname']))) {
+      $firstname_err = "Please enter your firstname";
+    } else {
+      $firstname = trim($_POST['firstname']);
+    }
+
+    //Validate Lastname
+
+    if (empty(trim($_POST['lastname']))) {
+      $lastname_err = "Please enter your lastname";
+    } else {
+      $lastname = trim($_POST['lastname']);
+    }
+
+    // Validate email
+    if(empty(trim($_POST["email"]))){
+        $email_err = "Please enter your email.";
+    } else{
+        $email = trim($_POST["email"]);
+    }
+
 
     // Validate username
     if (empty(trim($_POST["username"]))) {
@@ -62,20 +85,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check input errors before inserting in database
-    if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
+    if (empty($firstname_err) && empty($lastname_err) &&  empty($email_err) && empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
 
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        $sql = "INSERT INTO users (firstname, lastname, email, username, password) VALUES (?, ?, ?, ?, ?)";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Set parameters
+            $param_firstname = $firstname;
+            $param_lastname = $lastname;
+            $param_email = $email;
             $param_username = $username;
-
             $pass = $param_username . $password . $all_pepper;
             $param_password = password_hash($pass, PASSWORD_DEFAULT);
 
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
+            $stmt->bind_param("sssss", $param_firstname, $param_lastname, $param_email, $param_username, $param_password);
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
                 // Redirect to login page
@@ -110,6 +135,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="form-group <?php echo (!empty($firstname_err)) ? 'has-error' : ''; ?>">
+                <label>Firstname</label>
+                <input type="text" name="firstname" class="form-control" value="<?php echo (!empty(htmlspecialchars($firstname))); ?>">
+                <span class="help-block"><?php echo $firstname_err; ?></span>
+            </div>
+            <div class="form-group <?php echo (!empty($lastname_err)) ? 'has-error' : ''; ?>">
+                <label>Lastname</label>
+                <input type="text" name="lastname" class="form-control" value="<?php echo (!empty(htmlspecialchars($lastname))); ?>">
+                <span class="help-block"><?php echo $lastname_err; ?></span>
+            </div>
+            <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" value="<?php echo (!empty(htmlspecialchars($email))); ?>">
+                <span class="help-block"><?php echo $email_err; ?></span>
+            </div>
             <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label>Username</label>
                 <input type="text" name="username" class="form-control" value="<?php echo (!empty(htmlspecialchars($username))); ?>">
