@@ -39,13 +39,13 @@ require_once "config.php";
                       // output data of each row
 
                       while($row = mysqli_fetch_assoc($result)) {
-                        echo "<th colspan='2'>" . $_SESSION['username'] . "`s Dashboard" . "</th>".
-                             "<tr><td>" . "User ID: " . "</td>" . "<td>" . $row["id"]. "</td></tr>" .
-                             "<tr><td>" . "First Name: " . "</td>" . "<td>" . $row["firstname"]. "</td></tr>" .
-                             "<tr><td>" . "Last Name: " .  "</td>" . "<td>" . $row["lastname"]. "</td></tr>" .
-                             "<tr><td>" . "User Name: " .  "</td>" . "<td>" . $row["username"] . "</td></tr>" .
-                             "<tr><td>" . "Email: " .  "</td>" . "<td>" . $row["email"] . "</td></tr>" .
-                             "<tr><td>" . "Member since: " . "</td>" . "<td>" .  $row['date'] . "</td></tr>";
+                          echo "<th colspan='2'>" . $_SESSION['username'] . "`s Dashboard" . "</th>".
+                              "<tr><td>" . "User ID: " . "</td>" . "<td>" . $row["id"]. "</td></tr>" .
+                              "<tr><td>" . "First Name: " . "</td>" . "<td>" . $row["firstname"]. "</td></tr>" .
+                              "<tr><td>" . "Last Name: " .  "</td>" . "<td>" . $row["lastname"]. "</td></tr>" .
+                              "<tr><td>" . "User Name: " .  "</td>" . "<td>" . $row["username"] . "</td></tr>" .
+                              "<tr><td>" . "Email: " .  "</td>" . "<td>" . $row["email"] . "</td></tr>" .
+                              "<tr><td>" . "Member since: " . "</td>" . "<td>" .  $row['date'] . "</td></tr>";
                           }
                       } else {
                       echo "Oops! Something went wrong. Please try again later.";

@@ -11,17 +11,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Validate Firstname
 
     if (empty(trim($_POST['firstname']))) {
-      $firstname_err = "Please enter your firstname";
+        $firstname_err = "Please enter your firstname";
     } else {
-      $firstname = trim($_POST['firstname']);
+        $firstname = trim($_POST['firstname']);
     }
 
     //Validate Lastname
 
     if (empty(trim($_POST['lastname']))) {
-      $lastname_err = "Please enter your lastname";
+        $lastname_err = "Please enter your lastname";
     } else {
-      $lastname = trim($_POST['lastname']);
+        $lastname = trim($_POST['lastname']);
     }
 
     // Validate email
